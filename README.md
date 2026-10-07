@@ -1,2 +1,2 @@
 # vahid-norouzi
-family payam
+niyak control
