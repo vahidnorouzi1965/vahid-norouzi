@@ -1,8 +1,6 @@
-
-const CACHE = "family-sms-v2";
+const CACHE = "family-sms-v3";
 
 const ASSETS = [
-  "./",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
@@ -30,17 +28,22 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
-  const url = new URL(event.request.url);
+  const requestURL = new URL(event.request.url);
 
-  // index.html همیشه از اینترنت گرفته شود
-  if (url.pathname.endsWith("/") || url.pathname.endsWith("/index.html")) {
-    event.respondWith(fetch(event.request));
+  // صفحه اصلی همیشه از اینترنت دریافت شود
+  if (
+    requestURL.pathname.endsWith("/") ||
+    requestURL.pathname.endsWith("/index.html")
+  ) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+        .catch(() => caches.match(event.request))
+    );
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then(
-      cached => cached || fetch(event.request)
-    )
+    caches.match(event.request)
+      .then(cached => cached || fetch(event.request))
   );
 });
