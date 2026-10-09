@@ -1,6 +1,6 @@
 {
-  "name":"پیام خانواده",
-  "short_name":" نیاک کنترل ",
+  "name":"niyak control",
+  "short_name":"niyak control",
   "start_url":"./",
   "display":"standalone",
   "background_color":"#0b1220",
